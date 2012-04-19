@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  Sorry for the long lines.  It's Android's fault for forcing you to type so much.  >_> -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/layout">
+
+    <TextView android:text="This is the native Android touchdown test." android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" />
+    <TextView android:text="Drag your finger on the screen with one touch only." android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <TableRow>
+            <TextView android:text="min" android:paddingRight="16dip" android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView android:id="@+id/lbl_min" android:text="N/A" android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView android:text="mean" android:paddingRight="16dip" android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView android:id="@+id/lbl_mean" android:text="N/A" android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView android:text="max" android:paddingRight="16dip" android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView android:id="@+id/lbl_max" android:text="N/A" android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+        
+        <TableRow>
+            <TextView android:text="std dev" android:paddingRight="16dip" android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView android:id="@+id/lbl_stdDev" android:text="N/A" android:textAppearance="?android:attr/textAppearanceLarge" />
+        </TableRow>
+        
+    </TableLayout>
+
+</LinearLayout>
