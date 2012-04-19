@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<title>touchdown</title>
+
+<p>This is the HTML5 touchdown test.</p>
+
+<p>Drag your finger on the screen with <em>one touch only</em>.</p>
+
+<table>
+<tbody>
+    <tr><th>min <td id="min">N/A
+    <tr><th>mean <td id="mean">N/A
+    <tr><th>max <td id="max">N/A
+    <tr><th>std dev <td id="std-dev">N/A
+</tbody>
+</table>
+
+<script>
+(function () {
+
+    var $ = document.querySelector.bind(document);
+    var minEl = $('#min');
+    var meanEl = $('#mean');
+    var maxEl = $('#max');
+    var stdDevEl = $('#std-dev');
+
+    // 16k should be enough for anybody...
+    var BUFSIZ = 1 << 14;
+    var touchTimes = [ ];
+    var deltas = [ ];
+    for (var i = 0; i < BUFSIZ; ++i) {
+        touchTimes.push(0);
+        deltas.push(0);
+    }
+
+    var curTouch;
+    var startTime;
+    var started = false;
+
+    function down(event) {
+        event.preventDefault();
+    }
+
+    function move(event) {
+        event.preventDefault();
+
+        var now = Date.now();
+        if (!started) {
+            curTouch = 0;
+            startTime = now;
+            started = true;
+            return;
+        }
+
+        touchTimes[curTouch] = now - startTime;
+        ++curTouch;
+    }
+
+    function up(event) {
+        event.preventDefault();
+
+        started = false;
+
+        if (curTouch < 2) {
+            return;
+        }
+
+        var deltaCount = curTouch - 1;
+        for (var i = 0; i < deltaCount; ++i) {
+            deltas[i] = touchTimes[i + 1] - touchTimes[i];
+        }
+
+        var min = Infinity;
+        var max = -Infinity;
+        var sum = 0;
+        // WTB reduce with tuples...
+        for (var i = 0; i < deltaCount; ++i) {
+            var dt = deltas[i];
+            min = Math.min(min, dt);
+            max = Math.max(max, dt);
+            sum += dt;
+        }
+
+        var mean = sum / deltaCount;
+
+        var stdSum = 0;
+        for (var i = 0; i < deltaCount; ++i) {
+            var x = deltas[i] - mean;
+            stdSum += + x * x;
+        }
+
+        var stdDev = Math.sqrt(stdSum / deltaCount);
+
+        minEl.textContent = min;
+        meanEl.textContent = mean;
+        maxEl.textContent = max;
+        stdDevEl.textContent = stdDev;
+    }
+
+    // Easy debugging on desktop browsers
+    window.addEventListener('mousedown', down, false);
+    window.addEventListener('mousemove', move, false);
+    window.addEventListener('mouseup', up, false);
+
+    window.addEventListener('touchstart', down, false);
+    window.addEventListener('touchmove', move, false);
+    window.addEventListener('touchend', up, false);
+
+}());
+</script>
